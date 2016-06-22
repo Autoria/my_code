@@ -1,5 +1,5 @@
 **01version:** 基本功能完成
----
+***
 **02version:**
 
   因为使用for event in pygame.event.get():。当一帧内获取多个改变direction的操作时，会出现蛇头已经del，但是新蛇头没有写入的情况。
