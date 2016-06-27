@@ -11,8 +11,8 @@
   **023version:**
   
   添加更改速度的方式：一种方式是将Clock.click(FPS)返回的毫秒/1000，换成秒为单位后再设置一个speed (pixel/s)，两者相乘得到每次移动的距离，代码类似于：
-    1.screen.blit(sprite, sprite_pos)
-    2.time_passed = clock.tick(30)
-    3.time_passed_seconds = time_passed / 1000.0
-    4.sprite_pos += key_direction * sprite_speed * time_passed_seconds
+    1. screen.blit(sprite, sprite_pos)
+    2. time_passed = clock.tick(30)
+    3. time_passed_seconds = time_passed / 1000.0
+    4. sprite_pos += key_direction * sprite_speed * time_passed_seconds
   另一种方式是直接改变FPS。这里使用后者的方法。
