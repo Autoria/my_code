@@ -19,4 +19,5 @@
   另一种方式是直接改变FPS。这里使用后者的方法。
 
 PS:
-  Clock.tick()使用的是SDL_Delay函数，不够精确但是节省了CPU资源，pygame中精准但消耗更多资源的方法是tick_busy_loop
+  1.Clock.tick()使用的是SDL_Delay函数，不够精确但是节省了CPU资源，pygame中精准但消耗更多资源的方法是tick_busy_loop()
+  2.SDL（Simple DirectMedia Layer）是一套开放源代码的跨平台多媒体开发库，使用C语言写成
