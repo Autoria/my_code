@@ -8,7 +8,7 @@
   
   最初为for event in pygame.event.get():每一个direction的if语句添加了break，即只允许改变一次方向，但是这样蛇的反应就很迟钝，所以可以使用一个list按顺序保存所有得到的direction，但是每次while的总循环只取第一个direction，这样即保证了不会出现冲突的判断，也保证了反应灵敏。
   ***
-  **023version:**
+  **03version:**
   
   添加更改速度的方式：一种方式是将Clock.click(FPS)返回的毫秒/1000，换成秒为单位后再设置一个speed (pixel/s)，两者相乘得到每次移动的距离，代码类似于：
   >  1. screen.blit(sprite, sprite_pos)
