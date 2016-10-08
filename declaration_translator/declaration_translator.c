@@ -13,7 +13,12 @@ char token[MAXTOKEN]; //最后一个记号字符串
 char name[MAXTOKEN]; //标识符名 
 char datatype[MAXTOKEN];  //数据类型为char、 int等 
 char out[1000]; //输出串 
-	
+int prevtoken = NO;
+
+void dcl(void);
+void dirdcl(void);
+void errmsg(char *);
+
 int main()
 {
 	while (gettoken() != EOF) {
@@ -66,9 +71,7 @@ int gettoken(void) //token: (); [number]; NAME; singel character.
         return tokentype = c;
 }
 
-void dcl(void);
-void dirdcl(void);
-void errmsg(char *);
+
 
 void dcl(void)
 {
@@ -108,4 +111,3 @@ void errmsg(char *msg)
 	printf("%s", msg);
 	prevtoken = YES;
 }
-
