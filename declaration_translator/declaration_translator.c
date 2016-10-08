@@ -5,6 +5,7 @@
 #define MAXTOKEN 100
 
 enum { NAME, PARENS, BRACKETS };
+enum { NO, YES };
 
 int gettoken(void);
 int tokentype; //最后一个记号的类型
@@ -12,7 +13,7 @@ char token[MAXTOKEN]; //最后一个记号字符串
 char name[MAXTOKEN]; //标识符名 
 char datatype[MAXTOKEN];  //数据类型为char、 int等 
 char out[1000]; //输出串 
-
+	
 int main()
 {
 	while (gettoken() != EOF) {
@@ -31,7 +32,11 @@ int gettoken(void) //token: (); [number]; NAME; singel character.
 	int c, getch(void);
 	void ungetch(int);
 	char *p = token;
-	
+
+	if (prevtoken == YES) {
+		prevtoken = NO;
+		return tokentype;
+	}
 	while ((c = getch()) == ' ' || c == '\t')
 	    ;
     if (c == '(') {
@@ -63,7 +68,7 @@ int gettoken(void) //token: (); [number]; NAME; singel character.
 
 void dcl(void);
 void dirdcl(void);
-
+void errmsg(char *);
 
 void dcl(void)
 {
@@ -81,12 +86,12 @@ void dirdcl(void)
 	if (tokentype == '(') {
 		dcl();
 		if (tokentype != ')')
-		    printf("error: missing )\n");
+		    errmsg("error: missing )\n");
 	}
 	else if (tokentype == NAME)
 	    strcpy(name, token);
     else
-        printf("error: expected name or (dcl)\n");
+        errmsg("error: expected name or (dcl)\n");
         
     while ((type=gettoken()) == PARENS || type == BRACKETS)
         if (type == PARENS)
@@ -97,3 +102,10 @@ void dirdcl(void)
         	strcat(out, " of");
         }
 }
+
+void errmsg(char *msg)
+{
+	printf("%s", msg);
+	prevtoken = YES;
+}
+
