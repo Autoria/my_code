@@ -1,23 +1,25 @@
 #include<stdio.h>
 #include<string.h>
 #include<ctype.h>
+#include"get.c"
 
 #define MAXTOKEN 100
 
 enum { NAME, PARENS, BRACKETS };
 enum { NO, YES };
 
-int gettoken(void);
-int tokentype; //最后一个记号的类型
-char token[MAXTOKEN]; //最后一个记号字符串 
-char name[MAXTOKEN]; //标识符名 
-char datatype[MAXTOKEN];  //数据类型为char、 int等 
-char out[1000]; //输出串 
+
+int tokentype; //×îºóÒ»¸ö¼ÇºÅµÄÀàÐÍ
+char token[MAXTOKEN]; //×îºóÒ»¸ö¼ÇºÅ×Ö·û´® 
+char name[MAXTOKEN]; //±êÊ¶·ûÃû 
+char datatype[MAXTOKEN];  //Êý¾ÝÀàÐÍÎªchar¡¢ intµÈ 
+char out[1000]; //Êä³ö´® 
 int prevtoken = NO;
 
 void dcl(void);
 void dirdcl(void);
 void errmsg(char *);
+int gettoken(void);
 
 int main()
 {
@@ -27,6 +29,7 @@ int main()
 		dcl();
 		if (tokentype != '\n')
 		    printf("syntax error\n");
+        if (tokentype == '(') printf("you meet (");
         printf("%s: %s %s\n", name, out, datatype);
 	}
 	return 0;
@@ -40,6 +43,7 @@ int gettoken(void) //token: (); [number]; NAME; singel character.
 
 	if (prevtoken == YES) {
 		prevtoken = NO;
+		printf("\npretoken tokentype in ascii: %d \n", tokentype);
 		return tokentype;
 	}
 	while ((c = getch()) == ' ' || c == '\t')
@@ -76,7 +80,7 @@ int gettoken(void) //token: (); [number]; NAME; singel character.
 void dcl(void)
 {
 	int ns;
-	for (ns = 0; gettoken() == '*'; ) //收集任意数量的* 
+	for (ns = 0; gettoken() == '*'; ) //ÊÕ¼¯ÈÎÒâÊýÁ¿µÄ* 
 	    ns++;
     dirdcl();
     while (ns-- > 0)
@@ -86,12 +90,12 @@ void dcl(void)
 void dirdcl(void)
 {
 	int type;
-	if (tokentype == '(') {
+	if (tokentype == '(') {         // ( dcl ) 
 		dcl();
 		if (tokentype != ')')
 		    errmsg("error: missing )\n");
 	}
-	else if (tokentype == NAME)
+	else if (tokentype == NAME)   //±äÁ¿Ãû×Ö 	
 	    strcpy(name, token);
     else
         errmsg("error: expected name or (dcl)\n");
